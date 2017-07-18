@@ -1,7 +1,7 @@
-import UserSaga from './user';
+import LocationSaga from './location';
 
 export default function* IndexSaga() {
   yield [
-    UserSaga()
+    LocationSaga()
   ];
 }

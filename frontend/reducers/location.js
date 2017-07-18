@@ -1,28 +1,28 @@
-import { USERS_REQUEST, USERS_SUCCESS, USERS_FAILURE } from '../constants/user';
+import { LOCATIONS_REQUEST, LOCATIONS_SUCCESS, LOCATIONS_FAILURE } from '../constants/location';
 
 const defaultState = {
   loading: false,
   loaded: false,
-  users: []
+  locations: []
 };
 
 export default function (state = defaultState, action) {
   const { response } = action;
   switch (action.type) {
-    case USERS_REQUEST:
+    case LOCATIONS_REQUEST:
       return {
         ...state,
         loading: true,
         loaded: false
       };
-    case USERS_SUCCESS:
+    case LOCATIONS_SUCCESS:
       return {
         ...state,
         loading: false,
         loaded: true,
-        users: response
+        locations: response
       };
-    case USERS_FAILURE:
+    case LOCATIONS_FAILURE:
       return {
         ...state,
         loading: false,

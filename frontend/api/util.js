@@ -1,4 +1,4 @@
-function createApiRequest(url, method, data) {
+export default function createApiRequest(url, method, data) {
   return fetch(url, {
     method,
     body: data ? JSON.stringify(data) : null
@@ -7,8 +7,4 @@ function createApiRequest(url, method, data) {
   .catch((error) => {
     throw error;
   });
-}
-
-export default function fetchUsersApi() {
-  return createApiRequest('/api/users', 'GET', null);
 }

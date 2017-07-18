@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListItem = ({ name, email }) => (
+const ListItem = ({ name, location }) => (
   <div>
     <h1>{name}</h1>
-    <p>{email}</p>
+    <p>{location}</p>
   </div>
 );
 
 ListItem.propTypes = {
   name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired
+  location: PropTypes.string.isRequired
 };
 
 export default ListItem;

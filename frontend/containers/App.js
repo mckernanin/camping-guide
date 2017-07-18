@@ -2,35 +2,35 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
-import fetchUsersRequest from '../actions/user';
+import fetchLocationsRequest from '../actions/location';
 
 import ListItem from '../components/ListItem';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.props.fetchUsersRequest();
+  componentWillMount() {
+    this.props.fetchLocationsRequest();
   }
   render() {
-    const { user: { users, loaded, loading } } = this.props;
+    const { location: { locations, loaded, loading } } = this.props;
     return (
       <div>
         {loading && <p>Stuff is loading.</p>}
-        {loaded && !users.length && <p>There was an error loading.</p>}
-        {users && users.map(user => <ListItem key={user.id} name={user.name} email={user.email} />)}
+        {loaded && !locations.length && <p>There was an error loading.</p>}
+        {locations &&
+          locations.map(place =>
+            <ListItem key={place._id} name={place.name} location={place.location} />)}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  user: PropTypes.shape({
-    users: PropTypes.array,
+  location: PropTypes.shape({
+    locations: PropTypes.array,
     loaded: PropTypes.bool,
     loading: PropTypes.bool
   }).isRequired,
-  fetchUsersRequest: PropTypes.func.isRequired
+  fetchLocationsRequest: PropTypes.func.isRequired
 };
 
-export default connect(({ user }) => ({ user }), { fetchUsersRequest })(App);
+export default connect(({ location }) => ({ location }), { fetchLocationsRequest })(App);
