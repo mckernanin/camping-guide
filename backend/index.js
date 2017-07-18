@@ -22,4 +22,6 @@ const exampleData = [
 
 router.get('/users', (req, res) => res.send(exampleData));
 
+router.use('/enums', require('./routes/Enums'));
+
 module.exports = router;
