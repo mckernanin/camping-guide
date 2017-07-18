@@ -6,7 +6,8 @@ import fetchLocationsRequest from '../actions/location';
 
 import ListItem from '../components/ListItem';
 
-class App extends Component {
+@connect(({ location }) => ({ location }), { fetchLocationsRequest })
+export default class App extends Component {
   componentWillMount() {
     this.props.fetchLocationsRequest();
   }
@@ -32,5 +33,3 @@ App.propTypes = {
   }).isRequired,
   fetchLocationsRequest: PropTypes.func.isRequired
 };
-
-export default connect(({ location }) => ({ location }), { fetchLocationsRequest })(App);
