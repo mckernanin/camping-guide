@@ -6,6 +6,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config');
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 
 // Setup express
 const app = express();
@@ -18,6 +19,9 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
 app.use(webpackHotMiddleware(compiler));
+
+// body-parser config
+app.use(bodyParser.json());
 
 // Require the backend
 app.use('/api', require('./backend/index'));
