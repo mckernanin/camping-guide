@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 
 import location from './location';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   location
 });
 
-export default reducers;
+export default rootReducer;
