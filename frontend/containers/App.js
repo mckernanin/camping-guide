@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { fetchLocationsRequest } from '../redux/modules/location';
 
 import ListItem from '../components/ListItem';
+import Container from '../components/Container';
 
 @connect(({ location }) => ({ location }), { fetchLocationsRequest })
 export default class App extends Component {
@@ -24,13 +25,13 @@ export default class App extends Component {
   render() {
     const { location: { locations, loaded, loading } } = this.props;
     return (
-      <div>
+      <Container>
         {loading && <p>Stuff is loading.</p>}
         {loaded && !locations.length && <p>There was an error loading.</p>}
         {locations &&
           locations.map(place =>
             <ListItem key={place._id} name={place.name} location={place.location} />)}
-      </div>
+      </Container>
     );
   }
 }
