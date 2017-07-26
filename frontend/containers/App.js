@@ -47,7 +47,7 @@ export default class App extends Component {
             {loaded && !locations.length && <p>There was an error loading.</p>}
             {locations &&
               <div>
-                <Header>Camp sites near <b>Denver, CO</b></Header>
+                <Header>Campsites near <b>Denver, CO</b></Header>
                 {locations.map(place =>
                   (<ListItem
                     key={place._id}
