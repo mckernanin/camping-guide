@@ -5,6 +5,8 @@ export const FETCH_LOCATIONS_REQUEST = 'location/FETCH_LOCATIONS_REQUEST';
 export const FETCH_LOCATIONS_SUCCESS = 'location/FETCH_LOCATIONS_SUCCESS';
 export const FETCH_LOCATIONS_FAILURE = 'location/FETCH_LOCATIONS_FAILURE';
 
+export const SELECT_LOCATION = 'location/SELECT_LOCATION';
+
 const defaultState = {
   loading: false,
   loaded: false,
@@ -33,6 +35,11 @@ export default function reducer(state = defaultState, action) {
         loading: false,
         loaded: false
       };
+    case SELECT_LOCATION:
+      return {
+        ...state,
+        selectedLocation: action.location
+      };
     default:
       return state;
   }
@@ -42,5 +49,12 @@ export function fetchLocationsRequest() {
   return {
     type: FETCH_LOCATIONS,
     promise: createApiRequest('locations')
+  };
+}
+
+export function selectLocation(location) {
+  return {
+    type: SELECT_LOCATION,
+    location
   };
 }

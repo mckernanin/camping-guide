@@ -2,21 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const ListItem = ({ className, name, location }) => (
-  <div className={className}>
-    <h1>{name}</h1>
-    <p>{location}</p>
+const ListItem = ({ className, place, selectLocation }) => (
+  <div
+    className={className}
+    onClick={() => selectLocation(place)}
+    role="button"
+    tabIndex={0}
+  >
+    <h1>{place.name}</h1>
+    <p>{place.location}</p>
   </div>
 );
 
 ListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired
+  place: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired
+  }).isRequired,
+  className: PropTypes.string.isRequired,
+  selectLocation: PropTypes.func.isRequired
 };
 
 export default styled(ListItem)`
   padding: 10px 0;
+  cursor: pointer;
   h1 {
     font-size: 20px;
     color: #111;
