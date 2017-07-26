@@ -11,7 +11,7 @@ import configureStore from './redux/configureStore';
 const store = configureStore();
 
 const RootStyles = styled.div`
-  font-family: sans-serif;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
   height: 100%;
   width: 100%;
   -webkit-font-smoothing: antialiased;
