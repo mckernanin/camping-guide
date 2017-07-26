@@ -7,7 +7,9 @@
   "author": "Henry Kaufman <hkaufman19@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "sample": "node ./backend/data/load-sample-data.js",
+    "blowitallaway": "node ./backend/data/load-sample-data.js --delete"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
