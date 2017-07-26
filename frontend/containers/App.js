@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
-import fetchLocationsRequest from '../actions/location';
+import { fetchLocationsRequest } from '../redux/modules/location';
 
 import ListItem from '../components/ListItem';
 
 @connect(({ location }) => ({ location }), { fetchLocationsRequest })
 export default class App extends Component {
+  static propTypes = {
+    location: PropTypes.shape({
+      locations: PropTypes.array,
+      loaded: PropTypes.bool,
+      loading: PropTypes.bool
+    }).isRequired,
+    fetchLocationsRequest: PropTypes.func.isRequired
+  }
+
   componentWillMount() {
     this.props.fetchLocationsRequest();
   }
+
   render() {
     const { location: { locations, loaded, loading } } = this.props;
     return (
@@ -24,12 +34,3 @@ export default class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  location: PropTypes.shape({
-    locations: PropTypes.array,
-    loaded: PropTypes.bool,
-    loading: PropTypes.bool
-  }).isRequired,
-  fetchLocationsRequest: PropTypes.func.isRequired
-};
