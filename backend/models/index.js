@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-// Update/edit this URL if needed
-const MONGO_URL = 'localhost/camping-guide';
-const conn = mongoose.createConnection(`mongodb://${MONGO_URL}`, {
+const conn = mongoose.createConnection(process.env.DATABASE, {
   useMongoClient: true
 });
 

@@ -8,6 +8,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+require('dotenv').config({ path: 'variables.env' });
+
 // Setup express
 const app = express();
 app.set('router', express.Router);
