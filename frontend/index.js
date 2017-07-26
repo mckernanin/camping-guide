@@ -14,6 +14,8 @@ const RootStyles = styled.div`
   font-family: sans-serif;
   height: 100%;
   width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 `;
 
 render((
