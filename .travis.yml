@@ -21,6 +21,5 @@ deploy:
     branch: master
 before_install:
 - openssl aes-256-cbc -K $encrypted_2d08653b77bf_key -iv $encrypted_2d08653b77bf_iv
-  -in deploy_key.enc -out ./deploy_key -d
-- openssl aes-256-cbc -K $encrypted_2d08653b77bf_key -iv $encrypted_2d08653b77bf_iv
-  -in travis-deploy.sh.enc -out ./travis-deploy.sh -d
+  -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
