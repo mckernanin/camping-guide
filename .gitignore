@@ -2,3 +2,4 @@ node_modules/
 tsconfig.json
 *.env
 deploy_key
+travis-deploy.sh
