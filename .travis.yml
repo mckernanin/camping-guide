@@ -16,12 +16,9 @@ env:
 deploy:
   provider: script
   skip_cleanup: true
-  script: ./travis-deploy.sh
+  script: chmod 600 deploy_key && ssh -o StrictHostKeyChecking=no -i deploy_key camping-guide@docker.mckernan.in ~/deploy.sh
   on:
     branch: master
 before_install:
 - openssl aes-256-cbc -K $encrypted_2d08653b77bf_key -iv $encrypted_2d08653b77bf_iv
-  -in secrets.tar.enc -out secrets.tar -d
-- tar xvf secrets.tar
-- chmod +x ./travis-deploy.sh
-- ls -al
+  -in deploy_key.enc -out ./deploy_key -d
