@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import Col from 'rfg';
+// import Col from 'rfg';
 import styled from 'styled-components';
 
 import { fetchLocationsRequest, selectLocation } from '../redux/modules/location';
@@ -12,6 +12,22 @@ import LocationInfo from '../components/LocationInfo';
 
 const VPadded = styled.div`
   padding: 40px 0;
+  display: flex;
+
+  @media (max-width: 700px) {
+    display: block;
+  }
+`;
+
+const ColLeft = styled.div`
+  flex: 1;
+`;
+
+const ColRight = styled.div`
+  flex: 3;
+  @media (min-width: 701px) {
+    margin-left: 1em;
+  }
 `;
 
 const Header = styled.h1`
@@ -42,7 +58,7 @@ export default class App extends Component {
     return (
       <Container>
         <VPadded>
-          <Col size={4}>
+          <ColLeft>
             {loading && <p>Stuff is loading.</p>}
             {loaded && !locations.length && <p>There was an error loading.</p>}
             {locations &&
@@ -55,11 +71,11 @@ export default class App extends Component {
                     selectLocation={this.props.selectLocation}
                   />))}
               </div>}
-          </Col>
-          <Col size={8}>
+          </ColLeft>
+          <ColRight>
             {selectedLocation && <LocationInfo place={selectedLocation} />}
             {!selectedLocation && <p>Select a location to view more info.</p>}
-          </Col>
+          </ColRight>
         </VPadded>
       </Container>
     );
