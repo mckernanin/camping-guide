@@ -16,9 +16,13 @@ env:
 deploy:
   provider: script
   skip_cleanup: true
-  script: chmod 600 deploy_key && ssh -o StrictHostKeyChecking=no -i deploy_key camping-guide@docker.mckernan.in ~/deploy.sh
+  script: chmod 600 deploy_key && ssh -o StrictHostKeyChecking=no -i deploy_key camping-guide@docker.mckernan.in
+    ~/deploy.sh
   on:
     branch: master
 before_install:
 - openssl aes-256-cbc -K $encrypted_2d08653b77bf_key -iv $encrypted_2d08653b77bf_iv
   -in deploy_key.enc -out ./deploy_key -d
+notifications:
+  slack:
+    secure: UgZzuKE+RqSHjoHPUszTBjb6wgaURhVnuhL8MT8D1KlRPgWV/4qLNwK0Y2IL0lCcT241RC3AbPPQhzWV4rsxiib9YrtqrrkJyu9+99Fj7eI0i3f6DF547SfKLrL+rHYpYFs4qe8G2jhVUTlo2ExetTwwBvZLEAvM4gjSribVW7Pu0JrIKHUJ/6Rp7z8Q/njV1WZ9xc+JTVPk4vb2bVUmMi65eOzWW+cyc220e5bK6j8LtPbEH3kjdoRYXJ2zHylSZ/+ogHvA9KYRnACrQ74m50Pg3R293AgMGoGEaErfxCfsoGAXJ9JF2Cnm7CePR8Belo03mho7/nAXtjEwo8xqqslYJY4Yj+ZMC+OJVU4VowBJJoZC8Skar3zYhsn6mBEip6FliWLi7RkhCJGJj7VmcMk6nSPBwuV8mtCfq8QuXn2irovByLFkOQk7WhmrLsJoMBU2EYpxJzVrAANijMpPwigp9qbx29r6t4uIUmH4P8aNJvyWTvn2opn49AvJoDywtnRup/C+JVcbA2EZWWye+9h/g5zHNj92iXq0uu9avns2zZk0a5679EHK9i23snI+aSoi8fRQDNgF4tSjk5B9G54n+xrSQNDbOlMyd4ynrBLf4gu6sjsSPLQUeMU7dFKVHZfHD5t1fF3nZsEO5pL/LwWi/jLZpzxa5upNIhsEzvI=
