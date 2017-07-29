@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 const LocationInfo = ({ className, place }) => (
   <div className={className}>
     <h1>{place.name}</h1>
-    <p>{place.location}</p>
+    <h3>{place.location}</h3>
+    <p>{place.desc}</p>
   </div>
 );
 
@@ -19,12 +20,12 @@ LocationInfo.propTypes = {
 
 export default styled(LocationInfo)`
   h1 {
-    fontSize: 3rem;
+    font-size: 3rem;
     color: #111;
     margin-bottom: 10px;
   }
   p {
-    fontSize: 1rem;
+    font-size: 1rem;
     color: #aaa;
   }
 `;

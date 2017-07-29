@@ -6,7 +6,7 @@ import Container from './Container';
 const NavbarStyled = styled.div`
   width: 100%;
   height: 80px;
-  background-color: #3088F1;
+  background-color: #C1363F;
   color: #fff;
 `;
 
