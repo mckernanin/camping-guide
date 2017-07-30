@@ -1,6 +1,5 @@
 import createApiRequest from '../../utils/createApiRequest';
 
-export const FETCH_LOCATIONS = 'location/FETCH_LOCATIONS';
 export const FETCH_LOCATIONS_REQUEST = 'location/FETCH_LOCATIONS_REQUEST';
 export const FETCH_LOCATIONS_SUCCESS = 'location/FETCH_LOCATIONS_SUCCESS';
 export const FETCH_LOCATIONS_FAILURE = 'location/FETCH_LOCATIONS_FAILURE';
@@ -47,7 +46,7 @@ export default function reducer(state = defaultState, action) {
 
 export function fetchLocationsRequest() {
   return {
-    type: FETCH_LOCATIONS,
+    types: [FETCH_LOCATIONS_REQUEST, FETCH_LOCATIONS_SUCCESS, FETCH_LOCATIONS_FAILURE],
     promise: createApiRequest('locations')
   };
 }
