@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import styled from 'styled-components';
 
-import App from './containers/App';
-import NavBar from './components/Navbar';
 
 import configureStore from './redux/configureStore';
+
+import routes from './routes';
 
 const store = configureStore();
 
@@ -21,8 +21,7 @@ const RootStyles = styled.div`
 render((
   <Provider store={store}>
     <RootStyles>
-      <NavBar />
-      <App />
+      {routes}
     </RootStyles>
   </Provider>
 ), document.getElementById('root'));
