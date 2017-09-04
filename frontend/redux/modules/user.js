@@ -28,6 +28,7 @@ export default function (state = defaultState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
     case SIGNUP_REQUEST:
+    case VALIDATE_TOKEN_REQUEST:
       return {
         ...state,
         loading: true,
@@ -49,6 +50,7 @@ export default function (state = defaultState, action) {
       };
     case LOGIN_FAILURE:
     case SIGNUP_FAILURE:
+    case VALIDATE_TOKEN_FAILURE:
       return {
         ...state,
         loading: false,
