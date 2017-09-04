@@ -20,6 +20,7 @@ router.get('/:user', authMiddleware, (req, res) => User.find({ _id: req.params.u
 router.post('/', (req, res) =>
   userPostMiddleware(req.body)
   .then((user) => {
+    console.log(user);
     const saveUser = new User(user);
     return saveUser.save(handleRequest(res));
   }, err => handleRequest(res)(err))
