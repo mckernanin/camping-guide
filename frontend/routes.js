@@ -6,6 +6,7 @@ import {
 
 import App from './containers/App';
 import NewCampsite from './containers/NewCampsite';
+import Login from './containers/Login';
 
 import NavBar from './components/Navbar';
 
@@ -15,6 +16,7 @@ export default (
       <NavBar />
       <Route exact path="/" component={App} />
       <Route path="/new" component={NewCampsite} />
+      <Route path="/login" component={Login} />
     </div>
   </Router>
 );
