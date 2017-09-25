@@ -1,14 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import apiMiddleware from './middleware/api';
+import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware } from 'react-router-redux';
 
-import rootReducer from './modules';
+import rootReducer from './reducers';
+import IndexSagas from './sagas';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
+export default function (history) {
+  const sagaMiddleware = createSagaMiddleware();
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
+  const router = routerMiddleware(history);
+  const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware, router)));
+  sagaMiddleware.run(IndexSagas);
 
-export default function configureStore() {
-  return createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(thunk, apiMiddleware))
-  );
+  return store;
 }

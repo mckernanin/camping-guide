@@ -1,14 +1,15 @@
-import createApiRequest from '../../utils/createApiRequest';
+import { takeLatest, call, put } from 'redux-saga/effects';
 
-export const FETCH_LOCATIONS_REQUEST = 'location/FETCH_LOCATIONS_REQUEST';
-export const FETCH_LOCATIONS_SUCCESS = 'location/FETCH_LOCATIONS_SUCCESS';
-export const FETCH_LOCATIONS_FAILURE = 'location/FETCH_LOCATIONS_FAILURE';
-
-export const SELECT_LOCATION = 'location/SELECT_LOCATION';
-
-export const CREATE_LOCATION_REQUEST = 'location/CREATE_LOCATION_REQUEST';
-export const CREATE_LOCATION_SUCCESS = 'location/CREATE_LOCATION_SUCCESS';
-export const CREATE_LOCATION_FAILURE = 'location/CREATE_LOCATION_FAILURE';
+function createApiRequest(url, method, data) {
+  return fetch(url, {
+    method,
+    body: data ? JSON.stringify(data) : null
+  })
+    .then(response => response.json())
+    .catch((error) => {
+      throw error;
+    });
+}
 
 const defaultState = {
   loading: false,
@@ -16,48 +17,49 @@ const defaultState = {
   locations: []
 };
 
+// reducer
 export default function reducer(state = defaultState, action) {
   const { response } = action;
   switch (action.type) {
-    case FETCH_LOCATIONS_REQUEST:
+    case 'FETCH_LOCATIONS_REQUEST':
       return {
         ...state,
         loading: true,
         loaded: false
       };
-    case FETCH_LOCATIONS_SUCCESS:
+    case 'FETCH_LOCATIONS_SUCCESS':
       return {
         ...state,
         loading: false,
         loaded: true,
         locations: response
       };
-    case FETCH_LOCATIONS_FAILURE:
+    case 'FETCH_LOCATIONS_FAILURE':
       return {
         ...state,
         loading: false,
         loaded: false,
         error: response
       };
-    case SELECT_LOCATION:
+    case 'SELECT_LOCATION':
       return {
         ...state,
         selectedLocation: action.location
       };
-    case CREATE_LOCATION_REQUEST:
+    case 'CREATE_LOCATION_REQUEST':
       return {
         ...state,
         loading: true,
         loaded: false
       };
-    case CREATE_LOCATION_SUCCESS:
+    case 'CREATE_LOCATION_SUCCESS':
       return {
         ...state,
         loading: false,
         loaded: true,
         locations: state.locations.concat([response])
       };
-    case CREATE_LOCATION_FAILURE:
+    case 'CREATE_LOCATION_FAILURE':
       return {
         ...state,
         loading: false,
@@ -69,23 +71,48 @@ export default function reducer(state = defaultState, action) {
   }
 }
 
+// actions
 export function fetchLocationsRequest() {
   return {
-    types: [FETCH_LOCATIONS_REQUEST, FETCH_LOCATIONS_SUCCESS, FETCH_LOCATIONS_FAILURE],
+    types: ['FETCH_LOCATIONS_REQUEST', 'FETCH_LOCATIONS_SUCCESS', 'FETCH_LOCATIONS_FAILURE'],
     promise: createApiRequest('locations')
   };
 }
 
 export function selectLocation(location) {
   return {
-    type: SELECT_LOCATION,
+    type: 'SELECT_LOCATION',
     location
   };
 }
 
 export function createLocation(location) {
   return {
-    types: [CREATE_LOCATION_REQUEST, CREATE_LOCATION_SUCCESS, CREATE_LOCATION_FAILURE],
+    types: ['CREATE_LOCATION_REQUEST', 'CREATE_LOCATION_SUCCESS', 'CREATE_LOCATION_FAILURE'],
     promise: createApiRequest('locations', 'POST', { location })
   };
+}
+
+// saga
+function fetchLocationsApi() {
+  return createApiRequest('/api/locations', 'GET', null);
+}
+
+function* locationsFlow() {
+  try {
+    const response = yield call(fetchLocationsApi);
+    yield put({
+      type: 'FETCH_LOCATIONS_SUCCESS',
+      response
+    });
+  } catch (e) {
+    yield put({
+      type: 'FETCH_LOCATIONS_FAILURE',
+      e
+    });
+  }
+}
+
+export function* locationsSaga() {
+  yield takeLatest('FETCH_LOCATIONS_REQUEST', locationsFlow);
 }

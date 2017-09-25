@@ -1,61 +1,81 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import { Flex, Box } from 'reflexbox';
-import { Text, Card, Button } from 'react-pasta';
+import { Link } from 'react-router-dom';
 
-import { loginFlow } from '../redux/modules/user';
+import Messages from '../components/Messages';
+import Errors from '../components/Errors';
 
-@connect(({ user }) => ({ user }), { loginFlow })
-export default class Login extends Component {
+import { loginRequest } from '../redux/modules/login';
+
+class Login extends Component {
   static propTypes = {
-    loginFlow: PropTypes.func.isRequired,
-    user: PropTypes.shape({
-      error: PropTypes.any
+    handleSubmit: PropTypes.func.isRequired,
+    loginRequest: PropTypes.func.isRequired,
+    login: PropTypes.shape({
+      requesting: PropTypes.bool,
+      successful: PropTypes.bool,
+      messages: PropTypes.array,
+      errors: PropTypes.array
     }).isRequired
-  }
-  constructor(props) {
-    super(props);
+  };
 
-    this.loginSubmit = this.loginSubmit.bind(this);
-  }
-
-  loginSubmit(e) {
-    e.preventDefault();
-    this.props.loginFlow({
-      email: e.target.email.value,
-      password: e.target.password.value
-    });
-  }
+  submit = (values) => {
+    this.props.loginRequest(values);
+  };
 
   render() {
-    const { error } = this.props.user;
+    const { handleSubmit, login: { requesting, successful, messages, errors } } = this.props;
+
     return (
-      <Flex align="center" justify="center" py={3}>
-        <Box w={320}>
-          <Card>
-            <Box mb={2}>
-              <h1>Login</h1>
-            </Box>
-            <form onSubmit={this.loginSubmit}>
-              <Box mb={2}>
-                <Text>Email</Text>
-                <input name="email" />
-              </Box>
-              <Box mb={2}>
-                <Text>Password</Text>
-                <input type="password" name="password" />
-              </Box>
-              <Button>Login</Button>
-            </form>
-            {error &&
-              <Flex pt={2} justify="center">
-                <small>{error.message}</small>
-              </Flex>
-            }
-          </Card>
-        </Box>
-      </Flex>
+      <div className="login">
+        <form className="widget-form" onSubmit={handleSubmit(this.submit)}>
+          <h1>Login</h1>
+          <label htmlFor="email">Email</label>
+          <Field
+            name="email"
+            type="text"
+            id="email"
+            className="email"
+            label="Email"
+            component="input"
+          />
+          <label htmlFor="password">Password</label>
+          <Field
+            name="password"
+            type="password"
+            id="password"
+            className="password"
+            label="Password"
+            component="input"
+          />
+          <button action="submit">Login</button>
+        </form>
+        <div className="auth-messages">
+          {!requesting &&
+            !!errors.length && <Errors message="Failure to login due to:" errors={errors} />}
+          {!requesting && !!messages.length && <Messages messages={messages} />}
+          {!requesting &&
+            successful && (
+              <div>
+                <Link to="/signup">Need to sign up? Click Here »</Link>
+              </div>
+            )}
+        </div>
+      </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  login: state.login
+});
+
+const connected = connect(mapStateToProps, { loginRequest })(Login);
+
+const formed = reduxForm({
+  form: 'login'
+})(connected);
+
+export default formed;
