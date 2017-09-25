@@ -4,7 +4,7 @@ export default function handleApiErrors(message) {
     message.status &&
     (message.status.toString()[0] === '4' || message.status.toString()[0] === '5')
   ) {
-    localStorage.removeItem('token');
+    localStorage.removeItem('tahosa-camping-token');
     throw new Error(message.message);
   }
   return message;

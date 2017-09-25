@@ -1,33 +1,20 @@
 const { Router } = require('express');
+const bodyParser = require('body-parser');
 const Location = require('../models/Location');
+const CRUD = require('../controllers/CRUDController');
 
 const router = Router();
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
-// Simple helper method for handling requests
-const handleRequest = res => (err, response) => {
-  if (err) return res.status(err.status || 500).send(err);
+router.get('/', CRUD.getAll(Location));
 
-  return res.status(200).send(response || {});
-};
+router.get('/:id', CRUD.getOne(Location));
 
-router.get('/', (req, res) => Location.find({}, handleRequest(res)));
+router.post('/', CRUD.create(Location));
 
-router.get('/:location', (req, res) => Location.find({ _id: req.params.location }, handleRequest(res)));
+router.put('/:id', CRUD.update(Location));
 
-router.post('/', (req, res) => {
-  const loc = new Location(req.body);
-
-  return loc.save(handleRequest(res));
-});
-
-router.put('/:location', (req, res) =>
-  Location.findOneAndUpdate(
-    { _id: req.params.location },
-    req.body,
-    handleRequest(res)
-  )
-);
-
-router.delete('/:location', (req, res) => Location.remove({ _id: req.params.location }, handleRequest(res)));
+router.delete('/:id', CRUD.delete(Location));
 
 module.exports = router;

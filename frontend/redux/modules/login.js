@@ -75,7 +75,7 @@ function loginApi(email, password) {
 
 function* logout() {
   yield put(unsetClient());
-  localStorage.removeItem('token');
+  localStorage.removeItem('tahosa-camping-token');
   yield put(push('/login'));
 }
 
@@ -85,7 +85,7 @@ function* loginFlow(email, password) {
     auth = yield call(loginApi, email, password);
     yield put(setClient(auth.token));
     yield put({ type: 'LOGIN_SUCCESS' });
-    localStorage.setItem('token', JSON.stringify(auth.token));
+    localStorage.setItem('tahosa-camping-token', JSON.stringify(auth.token));
     yield put(push('/'));
   } catch (error) {
     yield put({ type: 'LOGIN_ERROR', error });

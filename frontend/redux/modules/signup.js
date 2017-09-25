@@ -24,7 +24,7 @@ export default function signupReducer(state = initialState, action) {
         errors: [],
         messages: [
           {
-            body: `Successfully created account for ${action.response.email}`,
+            body: 'Successfully created account!',
             time: new Date()
           }
         ],

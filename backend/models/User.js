@@ -1,21 +1,21 @@
 const Mongo = require('./index');
-const mongoose = require('mongoose');
 
-const UserModel = Mongo.model('User', new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
+const UserModel = Mongo.model('User', {
   email: {
     type: String,
-    required: true
+    unique: true,
+    lowercase: true,
+    trim: true,
+    required: 'Please Supply an email address'
   },
-  passwordHash: {
+  name: {
     type: String,
-    required: true
-  }
-}, {
-  timestamps: true
-}));
+    required: 'Please supply a name',
+    trim: true
+  },
+  password: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
+});
 
 module.exports = UserModel;
