@@ -72,12 +72,8 @@ export default function reducer(state = defaultState, action) {
 }
 
 // actions
-export function fetchLocationsRequest() {
-  return {
-    types: ['FETCH_LOCATIONS_REQUEST', 'FETCH_LOCATIONS_SUCCESS', 'FETCH_LOCATIONS_FAILURE'],
-    promise: createApiRequest('locations')
-  };
-}
+
+export const fetchLocationsRequest = () => ({ type: 'FETCH_LOCATIONS_REQUEST' });
 
 export function selectLocation(location) {
   return {
@@ -86,12 +82,7 @@ export function selectLocation(location) {
   };
 }
 
-export function createLocation(location) {
-  return {
-    types: ['CREATE_LOCATION_REQUEST', 'CREATE_LOCATION_SUCCESS', 'CREATE_LOCATION_FAILURE'],
-    promise: createApiRequest('locations', 'POST', { location })
-  };
-}
+export const createLocation = () => ({ type: 'CREATE_LOCATION_REQUEST' });
 
 // saga
 function fetchLocationsApi() {

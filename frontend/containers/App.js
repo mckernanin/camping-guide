@@ -19,9 +19,7 @@ const VPadded = styled.div`
   }
 `;
 
-const ColLeft = styled.div`
-  flex: 1;
-`;
+const ColLeft = styled.div`flex: 1;`;
 
 const ColRight = styled.div`
   flex: 3;
@@ -47,7 +45,7 @@ export default class App extends Component {
     }).isRequired,
     fetchLocationsRequest: PropTypes.func.isRequired,
     selectLocation: PropTypes.func.isRequired
-  }
+  };
 
   componentWillMount() {
     this.props.fetchLocationsRequest();
@@ -61,16 +59,20 @@ export default class App extends Component {
           <ColLeft>
             {loading && <p>Stuff is loading.</p>}
             {loaded && !locations.length && <p>There was an error loading.</p>}
-            {locations &&
+            {locations && (
               <div>
-                <Header>Campsites near <b>Denver, CO</b></Header>
-                {locations.map(place =>
-                  (<ListItem
+                <Header>
+                  Campsites near <b>Denver, CO</b>
+                </Header>
+                {locations.map(place => (
+                  <ListItem
                     key={place._id}
                     place={place}
                     selectLocation={this.props.selectLocation}
-                  />))}
-              </div>}
+                  />
+                ))}
+              </div>
+            )}
           </ColLeft>
           <ColRight>
             {selectedLocation && <LocationInfo place={selectedLocation} />}

@@ -15,7 +15,7 @@ export default class NewCampsite extends Component {
       loading: PropTypes.bool
     }).isRequired,
     createLocation: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ export default class NewCampsite extends Component {
   render() {
     return (
       <Container>
-        <h1>new campsite</h1>
+        <h1>New Campsite</h1>
       </Container>
     );
   }
